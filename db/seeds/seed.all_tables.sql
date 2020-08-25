@@ -8,7 +8,7 @@ VALUES
         ('username2', '$2y$12$MISYeTy1U7UdUl7FtqQlouoIXQYfIMbetrD0fxgZ534kTNtHQMe/K', now(), now()),
         ('username3', '$2y$12$wLiigvNyKTAIxVvaU5MwO.v7z55id76R3uVoZD88Pfv4ovpUKCdhu', now(), now());
 
-INSERT INTO favorites (user, hero, added_at)
+INSERT INTO favorites (user_id, hero, added_at)
 VALUES
         (1, 5, now()),
         (1, 20, now()),
