@@ -9,7 +9,7 @@ const UsersService = {
     return db('users')
       .where({ username })
       .first()
-      .then(user => !user);
+      .then(user => !!user);
   },
 
   // Insert a new user
