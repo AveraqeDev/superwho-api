@@ -3,20 +3,20 @@ const FavoritesService = {
   getUserFavorites(db, id) {
     return db('favorites')
       .select('hero')
-      .where('user', id);
+      .where('user_id', id);
   },
 
   // Insert a user favorite
-  addUserFavorite(db, user, hero) {
+  addUserFavorite(db, user_id, hero) {
     return db
-      .insert({ user, hero })
+      .insert({ user_id, hero })
       .into('favorites');
   },
 
   // Remove a user favorite
-  removeUserFavorite(db, user, hero) {
+  removeUserFavorite(db, user_id, hero) {
     return db('favorites')
-      .where({ user, hero })
+      .where({ user_id, hero })
       .del();
   }
 };
