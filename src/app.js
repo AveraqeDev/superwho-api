@@ -5,22 +5,33 @@ const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
 
+// Route imports
+const authRouter = require('./auth/auth-router');
+const usersRouter = require('./users/users-router');
+
+// Create express app
 const app = express();
 
+// Setup morgan option based on environment
 const morganOption = (NODE_ENV === 'production')
   ? 'tiny'
   : 'common';
 
-app.use(morgan(morganOption));
-app.use(helmet());
+// Cors middleware for allowing cross origin
 app.use(cors());
+// Morgan middleware for logging information
+app.use(morgan(morganOption));
+// Helmet middleware for hiding our server type
+app.use(helmet());
 
+// Routes
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 
-
+// Error handler
 app.use((error, req, res, next) => {
   let response;
   if(NODE_ENV === 'production') {
-    console.error(error);
     response = { error: { message: 'Server Error' } };
   } else {
     console.error(error);

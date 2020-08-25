@@ -2,6 +2,7 @@ const FavoritesService = {
   // Get a users favorites
   getUserFavorites(db, id) {
     return db('favorites')
+      .select('hero')
       .where('user', id);
   },
 

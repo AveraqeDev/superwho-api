@@ -1,17 +1,30 @@
-# Express Boilerplate!
+# SuperWho?(API)
 
-This is a boilerplate project used for starting new projects!
+## Summary
+A Node, Express API built to connect the SuperWho? React client to a Postgres database
 
-## Set up
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
+## Endpoints
+### This is a JSON API server, it both expects JSON in the request body and returns JSON in the response.
+### /api is the root path for all of these routes (i.e.: localhost:8000/api/auth)
+#### /auth
+- POST Creates an auth token. Requires valid ```username``` and ```password``` (created when you make a user account) in the request body. Returns a JWT token named ```authToken```.
+- PUT Refreshes the auth token. Requires valid ```username``` and ```userID``` in the request body. Returns a new JWT token.
 
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
+#### /users
+- POST Inserts a new user into the ```users``` table using the ```username``` and ```password``` in the request body, generating a new ID. Returns the newly created user from the database.
+- **/favorites**
+  - GET Retrieves all entries from the ```favorites``` table, no body required in request, but does require ```Authorization``` token in header. Returns array of integers.
+      - Example:\
+        [
+          1,
+          5,
+          15,
+          21,
+          104
+        ]
+  - POST Inserts a new favorite record into the ```favorites``` table. Requires ```hero``` in request body and ```Authorization``` token in header. Returns no content.
+  - DELETE Removes a favorite record from the ```favorites``` table. Requires ```hero``` in request body and ```Authorization``` token in header. Returns no content.
 
 ## Scripts
 
@@ -21,6 +34,12 @@ Start nodemon for the application `npm run dev`
 
 Run the tests `npm test`
 
+Migrate PostgreSQL database locally `npm run migrate`
+
+Migrate PostgreSQL test database locally `npm run migrate:test`
+
+Migrate PostgreSQL production database remotely `npm run migrate:production`
+
 ## Deploying
 
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will run tests, migrate production database, and push to this remote's master branch.
