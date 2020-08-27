@@ -3,6 +3,7 @@ const path = require('path');
 
 const UsersService = require('./users-service');
 const FavoritesService = require('./favorites-service');
+const HerosService = require('../heros/heros-service');
 
 const requireAuth = require('../middleware/jwt-auth');
 
@@ -86,8 +87,25 @@ usersRouter
       req.app.get('db'), 
       req.user.id
     )
-      .then(favorites => {
-        res.status(200).json(favorites);
+      .then(ids => {
+        let favorites = [];
+        let requests = ids.map(id => {
+          return new Promise((resolve, reject) => {
+            try {
+              const hero = HerosService.getById(id);
+              resolve(hero);
+            } catch(error) {
+              reject(error);
+            }
+          });
+        });
+        Promise.all(requests).then((heros) => {
+          heros.forEach(hero => {
+            if(hero)
+              favorites.push(JSON.parse(hero));
+          });
+          res.status(200).json(favorites);
+        });
       })
       .catch(next);
   })
