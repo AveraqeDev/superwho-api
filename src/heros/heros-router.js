@@ -10,7 +10,9 @@ herosRouter
     try {
       HerosService.searchForHero(term)
         .then(heros => {
-          res.status(200).json(heros.results);
+          (heros.response !== 'success')
+            ? res.status(500).json({error: heros.error})
+            : res.status(200).json(heros.results);
         });
     } catch(error) {
       next(error);
@@ -20,9 +22,11 @@ herosRouter
     const { id } = req.params;
     try {
       HerosService.getById(id)
-        .then(hero => {
-          res.status(200).json(hero);
-        });
+        .then(hero => 
+          (hero.response !== 'success')
+            ? res.status(500).json({error: hero.error})
+            : res.status(200).json(hero)
+        );
     } catch(error) {
       next(error);
     }
