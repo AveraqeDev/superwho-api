@@ -73,7 +73,7 @@ usersRouter
       });
 
     FavoritesService.addUserFavorite(
-      req.app.get(db),
+      req.app.get('db'),
       req.user.id,
       hero
     )
