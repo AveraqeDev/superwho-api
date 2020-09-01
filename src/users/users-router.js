@@ -87,22 +87,24 @@ usersRouter
       req.app.get('db'), 
       req.user.id
     )
-      .then(ids => {
+      .then(heros => {
         let favorites = [];
-        let requests = ids.map(id => {
+        let requests = heros.map(hero => {
           return new Promise((resolve, reject) => {
-            try {
-              const hero = HerosService.getById(id);
-              resolve(hero);
-            } catch(error) {
-              reject(error);
-            }
+            HerosService.getById(hero.hero)
+              .then(hero => {
+                if(hero.response === 'success')
+                  resolve(hero);
+                else 
+                  reject({ error: hero.error });
+              })
+              .catch(error => reject(error));
           });
         });
         Promise.all(requests).then((heros) => {
           heros.forEach(hero => {
             if(hero)
-              favorites.push(JSON.parse(hero));
+              favorites.push(hero);
           });
           res.status(200).json(favorites);
         });
