@@ -11,7 +11,7 @@ herosRouter
       HerosService.searchForHero(term)
         .then(heros => {
           (heros.response !== 'success')
-            ? res.status(500).json({error: heros.error})
+            ? res.status(400).json({error: heros.error})
             : res.status(200).json(heros.results);
         });
     } catch(error) {
@@ -24,7 +24,7 @@ herosRouter
       HerosService.getById(id)
         .then(hero => 
           (hero.response !== 'success')
-            ? res.status(500).json({error: hero.error})
+            ? res.status(400).json({error: hero.error})
             : res.status(200).json(hero)
         );
     } catch(error) {
