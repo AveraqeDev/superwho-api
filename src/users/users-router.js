@@ -124,7 +124,8 @@ usersRouter
     )
       .then(() => {
         res.status(204);
-      });
+      })
+      .catch(next);
   });
 
 module.exports = usersRouter;
