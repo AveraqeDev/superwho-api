@@ -33,10 +33,10 @@ app.use('/api/heros', herosRouter);
 // Error handler
 app.use((error, req, res, next) => {
   let response;
+  console.error(error);
   if(NODE_ENV === 'production') {
     response = { error: { message: 'Server Error' } };
   } else {
-    console.error(error);
     response = { message: error.message, error };
   }
   res.status(500).json(response);
