@@ -35,7 +35,7 @@ app.use((error, req, res, next) => {
   let response;
   console.error(error);
   if(NODE_ENV === 'production') {
-    response = { error: { message: 'Server Error' } };
+    response = { error: { message: 'Internal server error' } };
   } else {
     response = { message: error.message, error };
   }

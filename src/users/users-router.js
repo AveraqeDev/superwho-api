@@ -119,7 +119,7 @@ usersRouter
 
     FavoritesService.removeUserFavorite(
       req.app.get('db'),
-      req.user.idm,
+      req.user.id,
       hero
     )
       .then(() => {
