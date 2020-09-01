@@ -51,6 +51,7 @@ usersRouter
               newUser
             )
               .then(user => {
+                delete user.password;
                 res
                   .status(201)
                   .location(path.posix.join(req.originalUrl, `/${user.id}`))
@@ -78,7 +79,7 @@ usersRouter
       hero
     )
       .then(() => {
-        res.status(201);
+        res.status(201).send();
       })
       .catch(next);
   })
