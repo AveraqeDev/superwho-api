@@ -14,9 +14,7 @@ const herosRouter = require('./heros/heros-router');
 const app = express();
 
 // Setup morgan option based on environment
-const morganOption = (NODE_ENV === 'production')
-  ? 'tiny'
-  : 'common';
+const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 
 // Cors middleware for allowing cross origin
 app.use(cors());
@@ -31,15 +29,16 @@ app.use('/api/users', usersRouter);
 app.use('/api/heros', herosRouter);
 
 // Error handler
+// eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
-  let response;
-  console.error(error);
-  if(NODE_ENV === 'production') {
-    response = { error: { message: 'Internal server error' } };
-  } else {
-    response = { error: { message: error.message, error } };
-  }
-  res.status(500).json(response);
+	let response;
+	console.error(error);
+	if (NODE_ENV === 'production') {
+		response = { error: { message: 'Internal server error' } };
+	} else {
+		response = { error: { message: error.message, error } };
+	}
+	res.status(500).json(response);
 });
 
 module.exports = app;
