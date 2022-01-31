@@ -7,7 +7,7 @@ const herosRouter = express.Router();
 herosRouter
 	.get('/search/:term', (req, res, next) => {
 		const { term } = req.params;
-		HerosService.searchForHero(term)
+		HerosService.searchForHero(req.app.get('redis'), term)
 			.then((heros) => {
 				heros.response !== 'success'
 					? res.status(400).json({ error: { message: heros.error } })
@@ -17,7 +17,7 @@ herosRouter
 	})
 	.get('/:id', (req, res, next) => {
 		const { id } = req.params;
-		HerosService.getById(id)
+		HerosService.getById(req.app.get('redis'), id)
 			.then((hero) => (hero.response !== 'success'
 				? res.status(400).json({ error: { message: hero.error } })
 				: res.status(200).json(hero)))

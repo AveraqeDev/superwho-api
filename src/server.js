@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const knex = require('knex');
+const redis = require('redis');
 const app = require('./app');
 
 const {
@@ -11,6 +12,8 @@ const {
 	DB_USER,
 	DB_PASS,
 	DB_NAME,
+	REDIS_HOST,
+	REDIS_PORT,
 } = require('./config');
 
 const db = knex({
@@ -25,6 +28,19 @@ const db = knex({
 });
 
 app.set('db', db);
+
+const redisClient = redis.createClient({
+	host: REDIS_HOST,
+	port: REDIS_PORT,
+});
+
+redisClient.connect();
+
+redisClient.on('error', err => {
+	console.log('Error ' + err);
+});
+
+app.set('redis', redisClient);
 
 app.listen(PORT, () => {
 	console.log(`Server running in ${NODE_ENV} mode on ${PORT}`);

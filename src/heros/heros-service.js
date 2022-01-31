@@ -6,12 +6,33 @@ const instance = axios.create({
 });
 
 const HerosService = {
-	searchForHero(term) {
-		return instance.get(`/search/${term}`).then((res) => res.data);
+	searchForHero(redis, term) {
+		return redis.get(term).then((hero) => {
+			if (hero) {
+				return JSON.parse(hero);
+			} else {
+				return instance.get(`/search/${term}`).then((res) => res.data).then((hero) => {
+					console.log('REQUEST -> ', hero);
+					redis.set(term, JSON.stringify(hero));
+					redis.expire(term, 12 * 60 * 60);
+					return hero;
+				});
+			}
+		});
 	},
 
-	getById(id) {
-		return instance.get(`/${id}`).then((res) => res.data);
+	getById(redis, id) {
+		return redis.get(`hero-${id}`).then((hero) => {
+			if (hero) {
+				return JSON.parse(hero);
+			} else {
+				return instance.get(`/${id}`).then((res) => res.data).then((hero) => {
+					redis.set(`hero-${id}`, JSON.stringify(hero));
+					redis.expire(`hero-${id}`, 12 * 60 * 60);
+					return hero;
+				});
+			}
+		});
 	},
 };
 
