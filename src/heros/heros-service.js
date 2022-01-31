@@ -12,7 +12,6 @@ const HerosService = {
 				return JSON.parse(hero);
 			} else {
 				return instance.get(`/search/${term}`).then((res) => res.data).then((hero) => {
-					console.log('REQUEST -> ', hero);
 					redis.set(term, JSON.stringify(hero));
 					redis.expire(term, 12 * 60 * 60);
 					return hero;
