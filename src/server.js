@@ -14,6 +14,7 @@ const {
 	DB_NAME,
 	REDIS_HOST,
 	REDIS_PORT,
+	REDIS_PASS,
 } = require('./config');
 
 const db = knex({
@@ -32,6 +33,7 @@ app.set('db', db);
 const redisClient = redis.createClient({
 	host: REDIS_HOST,
 	port: REDIS_PORT,
+	password: REDIS_PASS,
 });
 
 redisClient.connect();
