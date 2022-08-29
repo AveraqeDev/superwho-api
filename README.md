@@ -62,7 +62,6 @@ Seed PostgreSQL test database locally `npm run seed:test`
 - [knex](https://www.npmjs.com/package/knex) - `v1.0.1`
 - [morgan](https://www.npmjs.com/package/morgan) - `v1.10.0`
 - [pg](https://www.npmjs.com/package/pg) - `v8.7.1`
-- [redis](https://www.npmjs.com/package/redis) - `v4.0.2`
 
 ## Dev Dependencies
 
