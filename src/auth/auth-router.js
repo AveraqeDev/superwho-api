@@ -6,7 +6,7 @@ const bodyParser = express.json();
 
 // Base /auth endpoints
 authRouter
-// Login a user
+	// Login a user
 	.post('/login', bodyParser, (req, res, next) => {
 		const { username, password } = req.body;
 		const loginUser = {
@@ -14,28 +14,26 @@ authRouter
 			password,
 		};
 
-		for (const [key, value] of Object.entries(loginUser)) {
-			if (value === undefined) {
-				return res.status(400).json({
-					error: `Missing '${key}' in request body`,
-				});
-			}
+		if (!username || !password) {
+			return res.status(400).json({
+				error: 'Invalid Credentials',
+			});
 		}
 		AuthService.getUserByUsername(req.app.get('db'), loginUser.username)
 			.then((dbUser) => {
 				if (!dbUser) {
 					return res.status(400).json({
-						error: 'Incorrect username or password',
+						error: 'Invalid Credentials',
 					});
 				}
 
 				return AuthService.comparePasswords(
 					loginUser.password,
-					dbUser.password,
+					dbUser.password
 				).then((match) => {
 					if (!match) {
 						return res.status(400).json({
-							error: 'Incorrect username or password',
+							error: 'Invalid Credentials',
 						});
 					}
 

@@ -1,29 +1,20 @@
 {
+    "extends": ["airbnb", "plugin:prettier/recommended"],
+    "plugins": [],
     "env": {
+        "commonjs": true,
         "es2021": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "overrides": [
+    ],
     "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+        "ecmaVersion": "latest"
     },
     "rules": {
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "import/extensions": "off",
+        "linebreak-style": "off",
+        "no-param-reassign": "off",
+        "consistent-return": "off"
     }
 }

@@ -16,7 +16,7 @@ usersRouter.route('/').post(bodyParser, (req, res, next) => {
 
 	if (!req.body.username || !req.body.password) {
 		return res.status(400).json({
-			error: 'Missing \'username\' or \'password\' in request body',
+			error: "Missing 'username' or 'password' in request body",
 		});
 	}
 
@@ -49,7 +49,7 @@ usersRouter.route('/').post(bodyParser, (req, res, next) => {
 							.status(201)
 							.location(path.posix.join(req.originalUrl, `/${user.id}`))
 							.json(user);
-					},
+					}
 				);
 			});
 		})
@@ -64,7 +64,7 @@ usersRouter
 
 		if (!hero) {
 			return res.status(400).json({
-				error: 'Missing \'hero\' in request body',
+				error: "Missing 'hero' in request body",
 			});
 		}
 
@@ -76,17 +76,18 @@ usersRouter
 	})
 	.get(requireAuth, (req, res, next) => {
 		FavoritesService.getUserFavorites(req.app.get('db'), req.user.id)
-			.then((heros) => {
+			.then((favoriteHeros) => {
 				const favorites = [];
-				const requests = heros.map(
-					(hero) => new Promise((resolve, reject) => {
-						HerosService.getById(hero.hero)
-							.then((hero) => {
-								if (hero.response === 'success') resolve(hero);
-								else reject({ error: hero.error });
-							})
-							.catch((error) => reject(error));
-					}),
+				const requests = favoriteHeros.map(
+					(favoriteHero) =>
+						new Promise((resolve, reject) => {
+							HerosService.getById(favoriteHero.hero)
+								.then((hero) => {
+									if (hero.response === 'success') resolve(hero);
+									else reject(hero.error);
+								})
+								.catch((error) => reject(error));
+						})
 				);
 				Promise.all(requests).then((heros) => {
 					heros.forEach((hero) => {
@@ -102,7 +103,7 @@ usersRouter
 
 		if (!hero) {
 			return res.status(400).json({
-				error: 'Missing \'hero\' in request body',
+				error: "Missing 'hero' in request body",
 			});
 		}
 

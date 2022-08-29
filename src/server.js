@@ -38,8 +38,8 @@ const redisClient = redis.createClient({
 
 redisClient.connect();
 
-redisClient.on('error', err => {
-	console.log('Error ' + err);
+redisClient.on('error', (err) => {
+	console.log(`Error ${err}`);
 });
 
 app.set('redis', redisClient);

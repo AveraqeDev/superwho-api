@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
 
 // Regex to compare against for password requirements
-const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])[\S]+/;
+const REGEX_UPPER_LOWER_NUMBER_SPECIAL =
+	/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&])[\S]+/;
 
 const UsersService = {
 	// Check if a username already exists

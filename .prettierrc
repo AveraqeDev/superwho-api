@@ -1,0 +1,10 @@
+{
+	"endOfLine": "auto",
+	"printWidth": 80,
+	"singleQuote": true,
+	"trailingComma": "es5",
+	"semi": true,
+	"useTabs": true,
+	"importOrder": ["^([^@./])", "^@.*", ".*"],
+	"importOrderSeparation": true
+}
